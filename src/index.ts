@@ -7,7 +7,10 @@ const app = express();
 const logger = debug("robots:root");
 const port = process.env.PORT ?? 4000;
 const url = process.env.DATA_BASE_CONNECTION;
+import cors from "cors";
 
+app.use(cors());
+app.use(express.json());
 app.use("/robots", robotsRouters);
 
 app.listen(port, () => {

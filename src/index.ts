@@ -1,7 +1,12 @@
+import debug from "debug";
 import express from "express";
+import robotsRouters from "./routers/robots/robotsRouters.js";
 const app = express();
+const logger = debug("robots:root");
 const port = 4000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World  robots!");
+app.use("/robots", robotsRouters);
+
+app.listen(port, () => {
+  debug(`Example app listening on port ${port}`);
 });

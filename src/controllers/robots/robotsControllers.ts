@@ -3,10 +3,16 @@ import Robot from "../../database/models/robotSchema.js";
 import { type RobotStructure } from "../../types.js";
 
 export const getRobots = async (req: Request, res: Response) => {
-  const robots = await Robot.find();
+  const robot = await Robot.find();
   res.status(200).json({
-    robots,
+    robot,
   });
+};
+
+export const getRobotById = async (req: Request, res: Response) => {
+  const _id = req.params;
+  const robot = await Robot.findById(_id);
+  res.status(200).json({ robot });
 };
 
 export const deleteRobot = async (req: Request, res: Response) => {

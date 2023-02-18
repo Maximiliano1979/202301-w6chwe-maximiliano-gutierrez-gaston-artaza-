@@ -10,8 +10,8 @@ export const getRobots = async (req: Request, res: Response) => {
 };
 
 export const deleteRobot = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const robot = await Robot.findByIdAndDelete(id);
+  const _id = req.params;
+  const robot = await Robot.findByIdAndDelete(_id);
   res.status(200).json({ robot });
 };
 

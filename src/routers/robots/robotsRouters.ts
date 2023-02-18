@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createRobot,
+  deleteRobot,
   getRobots,
 } from "../../controllers/robots/robotsControllers.js";
 
@@ -9,5 +10,6 @@ const robotsRouters = Router();
 
 robotsRouters.get("/", getRobots);
 robotsRouters.post("/", createRobot);
+robotsRouters.delete("/:_id", deleteRobot);
 
 export default robotsRouters;

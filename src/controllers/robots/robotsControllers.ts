@@ -9,6 +9,12 @@ export const getRobots = async (req: Request, res: Response) => {
   });
 };
 
+export const deleteRobot = async (req: Request, res: Response) => {
+  const _id = req.params;
+  const robot = await Robot.findByIdAndDelete(_id);
+  res.status(200).json({ robot });
+};
+
 export const createRobot = async (
   req: Request<
     Record<string, unknown>,

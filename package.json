@@ -4,13 +4,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest --passWithNoTests",
+    "test": "jest test --passWithNoTests",
     "prepare": "husky install",
     "start": "npx tsc && node dist",
     "build": "tsc",
     "build:dev": "tsc --watch",
     "start:dev": "node --watch dist",
-    "test:dev": "jest --watchAll --passWithNoTests"
+    "test:dev": "jest test --watchAll --passWithNoTests",
+    "test:coverage": "jest test --coverage --watchAll=false --passWithNoTests"
   },
   "keywords": [],
   "author": "",

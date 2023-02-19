@@ -11,7 +11,7 @@
     "build:dev": "tsc --watch",
     "start:dev": "node --watch dist",
     "test:dev": "jest test --watchAll --passWithNoTests",
-    "test:coverage": "jest test --coverage --watchAll=false --passWithNoTests"
+    "test:coverage": "jest test --coverage --watchAll=false "
   },
   "keywords": [],
   "author": "",

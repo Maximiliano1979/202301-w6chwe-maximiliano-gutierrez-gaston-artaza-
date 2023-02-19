@@ -36,3 +36,17 @@ export const createRobot = async (
     newRobot,
   });
 };
+
+export const updateRobotName = async (
+  req: Request<
+    Record<string, unknown>,
+    Record<string, unknown>,
+    RobotStructure
+  >,
+  res: Response
+) => {
+  const _id = req.params;
+  const { speed, endurance, image, ...dateToChange } = req.body;
+  const updatedRobot = await Robot.findByIdAndUpdate(_id, dateToChange);
+  return res.status(200).json({ updatedRobot });
+};

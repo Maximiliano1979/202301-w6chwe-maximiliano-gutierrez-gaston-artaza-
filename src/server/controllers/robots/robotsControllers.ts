@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
-import Robot from "../../database/models/robotSchema.js";
-import { type RobotStructure } from "../../types.js";
+import Robot from "../../../database/models/robotSchema.js";
+import { type RobotStructure } from "../../../types.js";
 
 export const getRobots = async (req: Request, res: Response) => {
   const robot = await Robot.find();

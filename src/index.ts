@@ -1,7 +1,7 @@
 import "./environment.js";
 import debug from "debug";
 import express from "express";
-import robotsRouters from "./routers/robots/robotsRouters.js";
+import robotsRouters from "./server/routers/robots/robotsRouters.js";
 import dataBaseConnection from "./database/config.js";
 const app = express();
 const logger = debug("robots:root");

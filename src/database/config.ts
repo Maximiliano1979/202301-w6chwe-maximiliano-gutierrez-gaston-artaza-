@@ -10,6 +10,7 @@ const dataBaseConnection = async (url: string) => {
       delete converted._id;
     },
   });
+
   try {
     await mongoose.connect(url);
     logger("Base de datos online");

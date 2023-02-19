@@ -37,7 +37,7 @@ export const createRobot = async (
   });
 };
 
-const updateRobotname = (
+export const updateRobotName = async (
   req: Request<
     Record<string, unknown>,
     Record<string, unknown>,
@@ -46,7 +46,7 @@ const updateRobotname = (
   res: Response
 ) => {
   const _id = req.params;
-  const { name } = req.body;
-  const updatedRobot = Robot.findByIdAndUpdate(_id, { name });
+  const { speed, endurance, image, ...dateToChange } = req.body;
+  const updatedRobot = await Robot.findByIdAndUpdate(_id, dateToChange);
   return res.status(200).json({ updatedRobot });
 };

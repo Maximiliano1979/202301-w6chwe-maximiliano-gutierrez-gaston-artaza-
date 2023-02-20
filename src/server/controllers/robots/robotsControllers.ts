@@ -1,24 +1,64 @@
-import { type Request, type Response } from "express";
+import { type Request, type Response, type NextFunction } from "express";
+import { CustomError } from "../../../CustomError/CustomError.js";
 import Robot from "../../../database/models/robotSchema.js";
 import { type RobotStructure } from "../../../types.js";
 
-export const getRobots = async (req: Request, res: Response) => {
-  const robot = await Robot.find();
-  res.status(200).json({
-    robot,
-  });
+export const getRobots = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const robots = await Robot.find();
+    res.status(200).json({ robots });
+  } catch (error) {
+    const customError = new CustomError(
+      error.message,
+      500,
+      "Couldn't retrieve robots"
+    );
+    next(customError);
+  }
 };
 
-export const getRobotById = async (req: Request, res: Response) => {
+export const getRobotById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.params;
-  const robot = await Robot.findById(id);
-  res.status(200).json({ robot });
+
+  try {
+    const robot = await Robot.findById(id);
+    res.status(200).json({ robot });
+  } catch (error) {
+    const customError = new CustomError(
+      error.message,
+      500,
+      "Couldn't retrieve a robot"
+    );
+    next(customError);
+  }
 };
 
-export const deleteRobot = async (req: Request, res: Response) => {
+export const deleteRobot = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.params;
-  const robot = await Robot.findByIdAndDelete(id);
-  res.status(200).json({ robot });
+
+  try {
+    const robot = await Robot.findByIdAndDelete(id);
+    res.status(200).json({ robot });
+  } catch (error) {
+    const customError = new CustomError(
+      error.message,
+      500,
+      "Couldn't delete the robot "
+    );
+    next(customError);
+  }
 };
 
 export const createRobot = async (
@@ -27,14 +67,24 @@ export const createRobot = async (
     Record<string, unknown>,
     RobotStructure
   >,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  const { name, image, created, speed } = req.body;
-  const newRobot = await Robot.create({ name, image, created, speed });
+  try {
+    const { name, image, created, speed } = req.body;
+    const newRobot = await Robot.create({ name, image, created, speed });
+    res.status(201).json({
+      newRobot,
+    });
+  } catch (error) {
+    const customError = new CustomError(
+      error.message,
+      500,
+      "Couldn't create a robot"
+    );
 
-  res.status(201).json({
-    newRobot,
-  });
+    next(customError);
+  }
 };
 
 export const updateRobotName = async (

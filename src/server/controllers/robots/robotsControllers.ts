@@ -10,14 +10,14 @@ export const getRobots = async (req: Request, res: Response) => {
 };
 
 export const getRobotById = async (req: Request, res: Response) => {
-  const _id = req.params;
-  const robot = await Robot.findById(_id);
+  const id = req.params;
+  const robot = await Robot.findById(id);
   res.status(200).json({ robot });
 };
 
 export const deleteRobot = async (req: Request, res: Response) => {
-  const _id = req.params;
-  const robot = await Robot.findByIdAndDelete(_id);
+  const id = req.params;
+  const robot = await Robot.findByIdAndDelete(id);
   res.status(200).json({ robot });
 };
 
@@ -45,8 +45,8 @@ export const updateRobotName = async (
   >,
   res: Response
 ) => {
-  const _id = req.params;
+  const id = req.params;
   const { speed, endurance, image, ...dateToChange } = req.body;
-  const updatedRobot = await Robot.findByIdAndUpdate(_id, dateToChange);
+  const updatedRobot = await Robot.findByIdAndUpdate(id, dateToChange);
   return res.status(200).json({ updatedRobot });
 };

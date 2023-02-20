@@ -15,7 +15,7 @@ const dataBaseConnection = async (url: string) => {
     await mongoose.connect(url);
     logger("Base de datos online");
   } catch (error) {
-    logger(error);
+    logger(error.message);
   }
 };
 

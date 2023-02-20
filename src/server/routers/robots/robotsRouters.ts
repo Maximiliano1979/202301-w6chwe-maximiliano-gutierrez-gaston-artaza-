@@ -11,7 +11,7 @@ const robotsRouters = Router();
 
 robotsRouters.get("/", getRobots);
 robotsRouters.post("/", createRobot);
-robotsRouters.delete("/:_id", deleteRobot);
+robotsRouters.delete("/:id", deleteRobot);
 robotsRouters.get("/:_id", getRobotById);
 robotsRouters.put("/:_id", updateRobotName);
 

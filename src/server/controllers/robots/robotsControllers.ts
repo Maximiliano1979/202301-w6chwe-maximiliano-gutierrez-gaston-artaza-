@@ -1,7 +1,9 @@
+import "./";
 import { type Request, type Response, type NextFunction } from "express";
 import { CustomError } from "../../../CustomError/CustomError.js";
 import Robot from "../../../database/models/robotSchema.js";
 import { type RobotStructure } from "../../../types.js";
+import jwt from "jsonwebtoken";
 
 export const getRobots = async (
   req: Request,
@@ -46,9 +48,33 @@ export const deleteRobot = async (
   res: Response,
   next: NextFunction
 ) => {
-  const id = req.params;
-
   try {
+    if (!req.header("Authorization")) {
+      const customError = new CustomError(
+        "Missing Authorization header",
+        401,
+        "Missing token"
+      );
+      next(customError);
+      return;
+    }
+
+    if (!req.header("Authorization")?.includes("Bearer")) {
+      const customError = new CustomError(
+        "Missing Authorization header",
+        401,
+        "Missing token"
+      );
+
+      next(customError);
+      return;
+    }
+
+    const token = req.header("Authorization")?.replace(/^`Bearer\s*/, "");
+
+    const payload = jwt.verify(token!, process.env.SECRET_WORD!);
+
+    const id = req.params;
     const robot = await Robot.findByIdAndDelete(id);
     res.status(200).json({ robot });
   } catch (error) {
@@ -71,15 +97,15 @@ export const createRobot = async (
   next: NextFunction
 ) => {
   try {
-    const { name, image, created, speed } = req.body;
-    const newRobot = await Robot.create({ name, image, created, speed });
+    const robotData = req.body;
+    const newRobot = await Robot.create(robotData);
     res.status(201).json({
       newRobot,
     });
   } catch (error) {
     const customError = new CustomError(
       error.message,
-      500,
+      400,
       "Couldn't create a robot"
     );
 

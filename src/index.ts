@@ -12,7 +12,7 @@ app.use("/robots", robotsRouters);
 
 import "./environment.js";
 import debug from "debug";
-import dataBaseConnection from "./database/config.js";
+import dataBaseConnection from "./database/dataBaseConnection.js";
 
 const logger = debug("robots:root");
 const port = process.env.PORT ?? 4000;

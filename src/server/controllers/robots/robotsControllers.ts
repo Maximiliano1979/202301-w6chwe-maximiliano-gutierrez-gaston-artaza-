@@ -49,31 +49,6 @@ export const deleteRobot = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.header("Authorization")) {
-      const customError = new CustomError(
-        "Missing Authorization header",
-        401,
-        "Missing token"
-      );
-      next(customError);
-      return;
-    }
-
-    if (!req.header("Authorization")?.includes("Bearer")) {
-      const customError = new CustomError(
-        "Missing Authorization header",
-        401,
-        "Missing token"
-      );
-
-      next(customError);
-      return;
-    }
-
-    const token = req.header("Authorization")?.replace(/^`Bearer\s*/, "");
-
-    const payload = jwt.verify(token!, process.env.SECRET_WORD!);
-
     const id = req.params;
     const robot = await Robot.findByIdAndDelete(id);
     res.status(200).json({ robot });
